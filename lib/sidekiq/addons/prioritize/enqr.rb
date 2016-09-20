@@ -43,15 +43,13 @@ module Sidekiq::Addons::Prioritize
       def get_priority_from_msg(msg)
         priority = nil
 
-        if msg["args"].is_a?(Array)
-          msg["args"].each do |param|
-            if param.is_a?(Hash) and ( param.has_key?(:with_priority) \
-               or param.has_key?("with_priority") )
+        msg["args"].each do |param|
+          if param.is_a?(Hash) and ( param.has_key?(:with_priority) \
+             or param.has_key?("with_priority") )
 
-              priority = param[:with_priority]
-              priority = param["with_priority"] unless priority
-              break
-            end
+            priority = param[:with_priority]
+            priority = param["with_priority"] unless priority
+            break
           end
         end
 
